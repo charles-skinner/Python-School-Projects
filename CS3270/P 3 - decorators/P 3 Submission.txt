@@ -1,0 +1,63 @@
+#Group members: Charlie Skinner, Batmunkh Munkhjargal
+#this is part_a code
+from timeit import default_timer as timer
+import time as _time
+
+def timedec(some_function):
+    def timedec_wrapper(seconds):
+        start = timer()
+        result = some_function(seconds)
+        end = timer()
+        print(f"function ran in {'{:.2f}'.format(end - start)} seconds")
+        return result
+    return timedec_wrapper
+
+@timedec
+def fun1(seconds):
+    _time.sleep(seconds)
+    
+def main():
+    fun1(2.5)
+
+if __name__ == "__main__":
+    main()
+
+PS C:\Users\skinn\OneDrive\Documents\School\Spring 2023\CS3270\P 3 - decorators> & C:/Users/skinn/AppData/Local/Microsoft/WindowsApps/python3.9.exe 
+"c:/Users/skinn/OneDrive/Documents/School/Spring 2023/CS3270/P 3 - decorators/decorators_part a.py"
+function ran in 2.50 seconds
+
+-------------------------------------------------------------------------------------------
+
+#Group members: Charlie Skinner, Batmunkh Munkhjargal
+#this is part_b code
+from timeit import default_timer as timer
+import time as _time
+
+class Timedec():
+    def __init__(self,func):
+        self.func = func
+        self.times = []
+    def __call__(self,*args):
+        start = timer()
+        self.func(*args)
+        end = timer()
+        result = end - start
+        self.times.append(result)
+
+@Timedec
+def fun1(seconds):
+    _time.sleep(seconds)
+    
+def main():
+    for t in [.1, .2, .3, .4, .5, .6, .7, .8, .9]:
+        fun1(t)
+    print(fun1.times)
+    print(", ".join(['{:.2f}'.format(t) for t in fun1.times]))
+
+if __name__ == "__main__":
+    main()
+
+PS C:\Users\skinn\OneDrive\Documents\School\Spring 2023\CS3270\P 3 - decorators> & C:/Users/skinn/AppData/Local/Microsoft/WindowsApps/python3.9.exe 
+"c:/Users/skinn/OneDrive/Documents/School/Spring 2023/CS3270/P 3 - decorators/decorators_part b.py"
+[0.1106297, 0.20246789999999998, 0.30683509999999997, 0.41500229999999994, 0.5082255, 0.6016768999999997, 0.7110564999999998, 0.8127813000000002, 0.9141733999999997]
+0.11, 0.20, 0.31, 0.42, 0.51, 0.60, 0.71, 0.81, 0.91
